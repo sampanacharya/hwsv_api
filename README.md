@@ -1,0 +1,1 @@
+HWSV API Fresh Document structure
