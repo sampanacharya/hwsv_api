@@ -9,17 +9,19 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-
+MODELS = os.path.join(BASE_DIR, 'ml/models')
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+import os, json
+from django.core.exceptions import ImproperlyConfigured
+        
 SECRET_KEY = 'django-insecure-4o++obt=73pdj*ey=fims+t1ii-f%$b&v4ncc#^o(i6ukrr9j4'
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -37,6 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # libs
+    'rest_framework',
+    # cutsom apps
+    'api',
 ]
 
 MIDDLEWARE = [
