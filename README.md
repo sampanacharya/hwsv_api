@@ -1,2 +1,2 @@
-HWSV API Fresh Document structure\n
+HWSV API Fresh Document structure
 TODO: Process multiple images
