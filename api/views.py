@@ -32,7 +32,26 @@ class ImageViewSet(ListAPIView):
 	serializer_class = ImageSerializer
 
 	def post(self, request):
-		file = request.data
-		image = UploadImageTest.objects.create(image = file)
-		print(image)
-		return HttpResponse(json.dupms({'message':'Uploaded'}))
+		form_data = {'name':''} 
+		success = True 
+		response = []
+		for (name,images) in zip(request.FILES.getlist('name'),request.FILES.getlist('images')):
+			form_data['name'] = name
+			form_data['images'] = images
+			imgSerial = ImageSerializer(name=form_data['name'],image=images)
+			print(name, images)
+			if(imgSerial.is_valid()):
+				imgSerial.save()
+				response.append(imgSerial.data)
+			else:
+				success = False
+		if success:
+			return Response({
+				'status':1,
+				'message':'success',
+				'data':form_data['name'],
+				})
+		return Response({
+			'status':0,
+			'message':'error!',
+			})

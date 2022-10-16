@@ -5,3 +5,4 @@ class ImageSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = UploadImageTest
 		fields = ('name','image')
+
