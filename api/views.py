@@ -24,11 +24,7 @@ from .serializer import ImageSerializer
 import matplotlib.pyplot as plt 
 import matplotlib
 
-class HWSV(APIView):
-	def post(self, request):
-		data = request.data
-		print('request.data')
-		print(data)
+
 		
 class ImageViewSet(APIView):
 	queryset = UploadImageTest.objects.all()
