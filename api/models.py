@@ -5,6 +5,6 @@ def nameFile(instance, filename):
 	return '/'.join(['images',str(instance.name), filename])
 
 class UploadImageTest(models.Model):
-	name = models.CharField(max_length = 100)
-	image = models.FileField(upload_to='images/')
+	original = models.FileField(upload_to = nameFile)
+	forged = models.FileField(upload_to=nameFile)
 	 

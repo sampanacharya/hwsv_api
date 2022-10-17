@@ -21,37 +21,39 @@ from django.forms.models import model_to_dict
 from .models import UploadImageTest
 from .serializer import ImageSerializer
 
+import matplotlib.pyplot as plt 
+import matplotlib
+
 class HWSV(APIView):
 	def post(self, request):
 		data = request.data
 		print('request.data')
 		print(data)
 		
-class ImageViewSet(ListAPIView):
+class ImageViewSet(APIView):
 	queryset = UploadImageTest.objects.all()
 	serializer_class = ImageSerializer
 
 	def post(self, request):
-		form_data = {'name':''} 
-		success = True 
-		response = []
-		for (name,images) in zip(request.FILES.getlist('name'),request.FILES.getlist('images')):
-			form_data['name'] = name
-			form_data['images'] = images
-			imgSerial = ImageSerializer(name=form_data['name'],image=images)
-			print(name, images)
-			if(imgSerial.is_valid()):
-				imgSerial.save()
-				response.append(imgSerial.data)
-			else:
-				success = False
-		if success:
-			return Response({
-				'status':1,
-				'message':'success',
-				'data':form_data['name'],
-				})
-		return Response({
-			'status':0,
-			'message':'error!',
-			})
+		
+		org = cv2.imdecode(np.fromstring(request.FILES['original'].read(), np.uint8), cv2.IMREAD_UNCHANGED)	
+		forg = cv2.imdecode(np.fromstring(request.FILES['forged'].read(), np.uint8), cv2.IMREAD_UNCHANGED)
+		print(org.shape, forg.shape)
+		# original image
+		org = cv2.resize(org, (220, 155))
+		org = cv2.bitwise_not(org)
+		org = org / 255
+		org = np.expand_dims(org, axis=0)
+
+		# forged image
+		forg = cv2.resize(forg, (220, 155))
+		forg = cv2.bitwise_not(forg)
+		forg = forg/255
+		forg = np.expand_dims(forg, axis=0)
+
+		print(org.shape, forg.shape)
+		mod = ApiConfig.model
+
+		assert(len(org.shape) == 4 and len(forg.shape) == 4),"Invalid Shape"
+		return Response({'score': mod.predict([org, forg])
+						})
