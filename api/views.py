@@ -21,10 +21,6 @@ from django.forms.models import model_to_dict
 from .models import UploadImageTest
 from .serializer import ImageSerializer
 
-import matplotlib.pyplot as plt 
-import matplotlib
-
-
 		
 class ImageViewSet(APIView):
 	queryset = UploadImageTest.objects.all()
