@@ -1,4 +1,4 @@
-Django==3.0.8
+django==3.0.8
 djangorestframework==3.14.0
 matplotlib==2.2.3
 numpy==1.21.4
