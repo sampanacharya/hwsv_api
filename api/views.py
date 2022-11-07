@@ -49,5 +49,13 @@ class ImageViewSet(APIView):
 		mod = ApiConfig.model
 
 		assert(len(org.shape) == 4 and len(forg.shape) == 4),"Invalid Shape"
-		return Response({'score': mod.predict([org, forg],3)[0][0]},status=200)
+		score = mod.predict([org, forg],3)[0][0]
+		status = ''
+		if(score <= 13):
+			status = 'Authentic'
+		else:
+			status = 'Forged'
+		return Response({'score': score,
+						 'status': status,
+						 },status=200)
 	
