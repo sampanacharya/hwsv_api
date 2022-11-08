@@ -4,4 +4,5 @@ matplotlib==2.2.3
 numpy==1.21.4
 opencv_python_headless==4.5.2.52
 tensorflow==2.1.0
-
+protobuf==3.20
+h5py==2.10
