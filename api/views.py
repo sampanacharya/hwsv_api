@@ -51,7 +51,7 @@ class ImageViewSet(APIView):
 		assert(len(org.shape) == 4 and len(forg.shape) == 4),"Invalid Shape"
 		score = mod.predict([org, forg],3)[0][0]
 		status = ''
-		if(score <= 13):
+		if(score <= 12):
 			status = 'Authentic'
 		else:
 			status = 'Forged'
